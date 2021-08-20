@@ -1,0 +1,20 @@
+{
+    "OperationNo" : "",
+    "Market" : {
+        "MarketID" : "",
+        "AccountName" : "",
+        "LocationName" : "",
+        "MarketName" : "",
+        "Menu" : null,
+        "ConnectURL" : "",
+        "Kiosks" : [],
+        "ProductCatalog" : []
+    },
+    "Message" : {
+        "Name" : "",
+        "Vendor" : "0",
+        "Created" : null,
+        "Version" : "1.0.0",
+        "Mode" : "FULL"
+    }
+ }

@@ -1,0 +1,36 @@
+{
+  "name": "cdl-csv-menu-import",
+  "version": "1.0.0",
+  "description": "CDL CSV Menu Import",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node app",
+    "test": "mocha test/unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johncruz-es/cdl-csv-menu-import.git"
+  },
+  "bugs": {
+    "url": "https://github.com/johncruz-es/cdl-csv-menu-import/issues"
+  },
+  "keywords": [
+    "npm",
+    "base",
+    "package"
+  ],
+  "author": "John Cruz",
+  "license": "All Rights Reserved",
+  "devDependencies": {},
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.3",
+    "neat-csv": "^6.0.1"
+  },
+  "private": true,
+  "readmeFilename": "README.md"
+}

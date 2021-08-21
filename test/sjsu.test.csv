@@ -1,0 +1,4 @@
+﻿Location,UPC,EMC Record Number,ProductID,Type,Description, WholesaleCost ,TagCost,ItemPrice,Tax,AltTax1,AltTax2,Min,Max,Deposit,PickListOption,CasePack,Active,,,,,,,,
+2,677684509312,2045614,50931,CHE,"Sausage, Egg & Cheese Biscuit", $2.67 ,1,5.39,0.0925,0.0000,0.0000,0,0,0.05,1,0,1,,,,,,,,
+3,677684509336,2045615,50933,CHE,Bacon Breakfast Croissant, $3.67 ,1,7.39,0.0925,,,,,,,,,,,,,,,,
+4,677684509329,2052222,50932,CHE,Black Forest Morning Muffin , $3.23 ,1,6.49,0.0925,,,,,,,,,,,,,,,,

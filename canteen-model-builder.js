@@ -42,7 +42,7 @@ const fs = require('fs');
   * @param {*} itemlist -- the row array 
   * @param {*} columndefinition -- the custom column definition
   * @param {*} marketData -- content for the Market node
-  * @returns Canteen JSON
+  * @returns Canteen JSON; null if no `itemlist` 
   */
 exports.CreateCanteenModel = function(itemlist, columndefinition, marketData) {
     let rows = 0;

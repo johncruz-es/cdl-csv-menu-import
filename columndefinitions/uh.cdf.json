@@ -1,0 +1,11 @@
+[
+    { "source" : "POSID", "target" : "ProductPackageID" }, 
+    { "source" : "ItemName", "target" : "ProductName" }, 
+    { "source" : "ItemGroup", "target" : "ProductCategory" }, 
+    { "source" : "Price", "target" : "Price" }, 
+    { "source" : "Tax", "target" : "TaxRate" }, 
+    { "source" : "FeeAmount", "target" : "FeeAmount" }, 
+    { "source" : "SubMenu", "target" : "SubMenu" }, 
+    { "source" : "HealthyIndicator", "target" : "HealthyIndicator" },
+    { "source" : "Barcode", "target" : "Barcode" }
+]

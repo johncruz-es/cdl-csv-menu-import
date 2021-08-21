@@ -1,0 +1,4 @@
+﻿ConceptName,POSID,ItemGroup,ItemName,ButtonText,Barcode,Price,ItemOrMod,IsLookupOnly,IsSoldByWeight,CategoryName,SubCategoryName
+Barcode Items,2000064,Beverage,Soda Diet Coke 20oz Bottle,Soda Diet Coke 20oz Bottle,4904500 ,1.99,Item,TRUE,FALSE,Beverage,Barcode Items
+Barcode Items,2000071,Beverage,Soda Coke Classic 20oz Bottle,Soda Coke Classic 20oz Bottle,4904403 ,1.99,Item,TRUE,FALSE,Beverage,Barcode Items
+Barcode Items,2000088,Beverage,Soda Dr. Pepper 20oz Bottle,Soda Dr. Pepper 20oz Bottle,78000082401 ,2.09,Item,TRUE,FALSE,Beverage,Barcode Items

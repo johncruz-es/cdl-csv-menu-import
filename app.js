@@ -1,5 +1,6 @@
 'use strict';
 const express =   require('express');
+const path = require('path');
 const http =	require('http');
 const portnum = 9000;
 const app = 	express();
@@ -14,7 +15,14 @@ app.use(express.urlencoded({extended: true, limit: '10mb' }));
 app.set('port', portnum);
 app.post(
 	'/v1/menu/canteen/convert', 
-	multer().single('file'), 
+	multer({
+		fileFilter : (req, file, cb) => {
+			let extensions = /csv|txt/;
+			let extname = extensions.test(path.extname(file.originalname).toLowerCase());
+
+			if(extname) return cb(null, true); else return cb(null, false);
+		}
+	}).single('file'), 
 	rtools.DisplayRouteData,
 	csvp.ProcessCSV, 
 	rtools.DisplayReturnData,
@@ -42,5 +50,5 @@ app.use(rtools.HandleError);
 
 // app.disable('x-powered-by');
 
-http.createServer(app).listen(portnum);	
+var server = http.createServer(app).listen(portnum);	
 console.log(`CDL CSV Menu conversion is listening on port ${portnum}`);

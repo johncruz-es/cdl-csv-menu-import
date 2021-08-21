@@ -47,7 +47,10 @@ exports.ProcessCSV = function(req, res, next) {
             }
         );
     } else {
-        console.log('no file');
+        console.log('No file provided -- no file generated');
+        res.locals.data = null;
+        res.statusCode = 400;
+
         next();
     }
 

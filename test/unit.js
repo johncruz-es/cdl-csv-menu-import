@@ -19,6 +19,16 @@ describe('csv-processor', function() {
       })
     });
 
+    it("should reject the request if an invalid type was provided", (done) => {
+      chai.request(url).post(route)
+      .field('type','sjsx')
+      .attach('file', './test/sjsu.test.csv')
+      .end((err, res) => {
+        res.should.have.status(400);
+        done();
+      })
+    });
+
     it("should reject files that aren't csv or txt", (done) => {
       chai.request(url).post(route)
       .field('type','sjsu')

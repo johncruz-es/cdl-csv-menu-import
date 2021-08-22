@@ -37,7 +37,15 @@ exports.ProcessCSV = function(req, res, next) {
                 if(req.body.ConnectURL) marketData.ConnectURL = req.body.ConnectURL;
                 if(req.body.Kiosk) marketData.Kiosk = req.body.Kiosk;
 
-                res.locals.data = Process(rst, type, marketData);
+                try {
+                    res.locals.data = Process(rst, type, marketData);
+                } catch(e) {
+                    console.log("Caught error");
+                    res.locals.data = null;
+                    res.statusCode = 400;
+                    next(e);
+                    return;
+                }
 
                 next();
             }, err => {
@@ -50,7 +58,6 @@ exports.ProcessCSV = function(req, res, next) {
         console.log('No file provided -- no file generated');
         res.locals.data = null;
         res.statusCode = 400;
-
         next();
     }
 
@@ -73,8 +80,7 @@ Process = function(csv, type, marketData) {
 
     switch(type) {
         case undefined : 
-            console.log("Don't know what type was provided");
-            reject(null);
+            throw new Error("No type provided");
         case 'sjsu' : // SJSU 
             console.log('Processing SJSU file');
             template = fs.readFileSync('./columndefinitions/sjsu.cdf.json');
@@ -88,8 +94,7 @@ Process = function(csv, type, marketData) {
             rst = cmb.CreateCanteenModel(csv, columndefinition, marketData);
             break;
         default :
-            console.log("Unsupported format provided");
-            reject(null);
+            throw new Error("Unsupported format provided");
     }
 
     return rst;

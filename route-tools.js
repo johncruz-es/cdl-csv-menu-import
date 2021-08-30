@@ -1,6 +1,6 @@
 exports.DisplayRouteData = function(req, res, next) {
     if(process.env.NODE_ENV != "production") {
-        console.log("[-->] ", req.method, req.url, " | body : ", req.body, " | params : ", req.params, " | query : ", req.query, " | file : ", req.file);
+        console.log("[-->] ", req.method, req.url, " | body : ", req.body, " | params : ", req.params, " | query : ", req.query, " | file : ", req.files);
     } else {
         console.log(req.url);
     }

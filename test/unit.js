@@ -22,7 +22,7 @@ describe('csv-processor', function() {
     it("should reject the request if an invalid type was provided", (done) => {
       chai.request(url).post(route)
       .field('type','sjsx')
-      .attach('file', './test/sjsu.test.csv')
+      .attach('csv', './test/sjsu.test.csv')
       .end((err, res) => {
         res.should.have.status(400);
         done();
@@ -32,7 +32,7 @@ describe('csv-processor', function() {
     it("should reject files that aren't csv or txt", (done) => {
       chai.request(url).post(route)
       .field('type','sjsu')
-      .attach('file', './test/testfile.jpg')
+      .attach('csv', './test/testfile.jpg')
       .end((err, res) => {
         res.should.have.status(400);
         done();
@@ -42,7 +42,7 @@ describe('csv-processor', function() {
     it("should process 3 records from the test file -- sjsu", (done) => {
       chai.request(url).post(route)
       .field('type', 'sjsu')
-      .attach('file', './test/sjsu.test.csv')
+      .attach('csv', './test/sjsu.test.csv')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.Market.ProductCatalog.should.have.lengthOf(3);
@@ -53,7 +53,7 @@ describe('csv-processor', function() {
     it("should process 3 records from the test file -- uh", (done) => {
       chai.request(url).post(route)
       .field('type', 'uh')
-      .attach('file', './test/uh.test.csv')
+      .attach('csv', './test/uh.test.csv')
       .end((err, res) => {
         res.should.have.status(200);
         res.body.Market.ProductCatalog.should.have.lengthOf(3);

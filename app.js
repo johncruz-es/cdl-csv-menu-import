@@ -17,12 +17,17 @@ app.post(
 	'/v1/menu/canteen/convert', 
 	multer({
 		fileFilter : (req, file, cb) => {
-			let extensions = /csv|txt/;
+			let extensions = /csv|txt|json/;
 			let extname = extensions.test(path.extname(file.originalname).toLowerCase());
 
 			if(extname) return cb(null, true); else return cb(null, false);
 		}
-	}).single('file'), 
+	}).fields(
+		[
+			{ name : 'csv', maxCount : 1 },
+			{ name : 'cdf', maxCount : 1 },
+		]
+	), 
 	rtools.DisplayRouteData,
 	csvp.ProcessCSV, 
 	rtools.DisplayReturnData,

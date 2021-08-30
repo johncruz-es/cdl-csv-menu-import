@@ -11,10 +11,11 @@ exports.ProcessCSV = function(req, res, next) {
         type = type.toLowerCase();
     }
 
-    if(req.file) {
-        console.log('file detected : ', req.file.originalname);
+    if(req.files) {
+        console.log('files detected : ', req.files);
+        // console.log('file detected : ', req.files['csv'][0].originalname);
 
-        loadCSV(req.file.buffer).then(
+        loadCSV(req.files['csv'][0].buffer).then(
             rst => {
                 console.log(`${rst.length} records detected`);
                 
@@ -38,7 +39,12 @@ exports.ProcessCSV = function(req, res, next) {
                 if(req.body.Kiosk) marketData.Kiosk = req.body.Kiosk;
 
                 try {
-                    res.locals.data = Process(rst, type, marketData);
+                    if(req.files['cdf']) {
+                        console.log('*****', req.files['cdf'][0].buffer);
+                        res.locals.data = Process(rst, type, marketData, req.files['cdf'][0].buffer);
+                    } else {
+                        res.locals.data = Process(rst, type, marketData, null);
+                    }
                 } catch(e) {
                     console.log("Caught error");
                     res.locals.data = null;
@@ -72,8 +78,10 @@ exports.ProcessCSV = function(req, res, next) {
  * 
  * @param {object} csv      The csv file
  * @param {string} type     The type of csv menu
+ * @param {string} marketData     The type of csv menu
+ * @param {string} cdf     The type of csv menu
  */
-Process = function(csv, type, marketData) {
+Process = function(csv, type, marketData, cdf) {
     let columndefinition = null;
     let template = null;
     let rst = null;
@@ -90,6 +98,13 @@ Process = function(csv, type, marketData) {
         case 'uh' : // UHouston
         console.log('Processing UHouston file');
             template = fs.readFileSync('./columndefinitions/uh.cdf.json');
+            columndefinition = JSON.parse(template);
+            rst = cmb.CreateCanteenModel(csv, columndefinition, marketData);
+            break;
+        case 'custom' : // Custom
+            console.log('Processing Custom file');
+            if(!cdf) throw new Error("CDF not included");
+            template = fs.readFileSync(cdf);
             columndefinition = JSON.parse(template);
             rst = cmb.CreateCanteenModel(csv, columndefinition, marketData);
             break;

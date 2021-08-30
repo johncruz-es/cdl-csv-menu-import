@@ -75,7 +75,7 @@ exports.CreateCanteenModel = function(itemlist, columndefinition, marketData) {
         console.log(`Processed ${rows} records`);
 
         // Add market data, if available
-        if(marketData.MarketID) model.Market.MarketID = marketData.MarketID;
+        if(marketData.MarketID) model.Market.MarketID = parseInt(marketData.MarketID);
         if(marketData.AccountName) model.Market.AccountName = marketData.AccountName;
         if(marketData.LocationName) model.Market.LocationName = marketData.LocationName;
         if(marketData.MarketName) model.Market.MarketName = marketData.MarketName;
@@ -132,12 +132,25 @@ var prepareItem = function(item, columndefinition) {
                 keys.forEach(key => {
                     let target = resolveColumn(key, columndefinition);
                     // console.log(key, target, item[key]);
-                    if(target) {
-                        if(target == "Barcode") {
+                    switch(target) {
+                        case null : 
+                        case '' : 
+                            break;
+                        case "Barcode": 
                             newItem.Barcodes.push({ BarCode : item[key] });
-                        } else {
+                            break;
+                        case "ProductPackageID" :
+                            newItem[target] = parseInt(item[key]);
+                            break;
+                        case "Price" :
+                            newItem[target] = parseFloat(item[key]);
+                            break;
+                        case "TaxRate" : 
+                            newItem[target] = parseFloat(item[key]);
+                            break;
+                        default:
                             newItem[target] = item[key];
-                        }
+                            break;
                     }
                 })
             }

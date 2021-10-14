@@ -59,31 +59,11 @@ exports.CreateCanteenModel = function(itemlist, columndefinition, marketData) {
                 }
 
                 itemlist.forEach(item => {
-                    // console.log(item);
-                    let barcodes = parseBarcodes(item, columndefinition);
-
-                    if(barcodes) {
-                        barcodes.forEach(b => {
-                            // Copy the current item because we don't want to 
-                            // overwrite the original
-                            let barcodecolumnname = resolveSourceColumn("Barcode", columndefinition);
-                            let tempitem = Object.assign({}, item);
-                            tempitem[barcodecolumnname] = b;
-                            
-                            let newItem = prepareItem(tempitem, columndefinition);
-                            if(newItem) {
-                                rows++;
-                                model.Market.ProductCatalog.push(newItem);
-                            }
-                        });
-                    } else {
-                        // Single barcode found -- add just the one
-                        let newItem = prepareItem(item, columndefinition);
-                        // console.log(newItem);
-                        if(newItem) {
-                            rows++;
-                            model.Market.ProductCatalog.push(newItem);
-                        }
+                    let newItem = prepareItem(item, columndefinition);
+                    // console.log(newItem);
+                    if(newItem) {
+                        rows++;
+                        model.Market.ProductCatalog.push(newItem);
                     }
                 });
             } else {
@@ -112,36 +92,6 @@ exports.CreateCanteenModel = function(itemlist, columndefinition, marketData) {
         }
     }
 };
-
-/**
- * Takes the given item, determines which is the barcode column, then tests if 
- * it has multiple barcodes separated by commas 
- * 
- * @param {*} item 
- * @param {*} columndefinition 
- * @returns an array of barcodes if multiple barcodes were detected; null if not
- */
-var parseBarcodes = function(item, columndefinition) {
-    let column = resolveSourceColumn("Barcode", columndefinition);
-    
-    if(column) {
-        // Add the "" to cast to string;
-        let barcode = item[column] + "";
-        let barcodes = barcode.split(',');
-        if(barcodes.length > 1) {
-            // Clean up the barcodes first
-            for (let i = 0; i < barcodes.length; i++) {
-                barcodes[i] = barcodes[i].trim();
-            }
-            return barcodes;
-        } else {
-            return null;
-        }
-    } else {
-        // No barcode 
-        return null;
-    }
-}
 
 /**
  * Prepares a `ProductCatalog` -- structure below:
@@ -180,7 +130,7 @@ var prepareItem = function(item, columndefinition) {
             if(columndefinition) {
                 let keys = Object.keys(item);
                 keys.forEach(key => {
-                    let target = resolveTargetColumn(key, columndefinition);
+                    let target = resolveColumn(key, columndefinition);
                     // console.log(key, target, item[key]);
                     switch(target) {
                         case null : 
@@ -227,7 +177,7 @@ var prepareItem = function(item, columndefinition) {
  * @param {*} columndefinition 
  * @returns {string} name of the column it maps to; null if not found
  */
-var resolveTargetColumn = function(name, columndefinition) {
+var resolveColumn = function(name, columndefinition) {
     try {
         if(Array.isArray(columndefinition)) {
             let rst = columndefinition.find(col => {
@@ -246,30 +196,7 @@ var resolveTargetColumn = function(name, columndefinition) {
             return null;
         }
     } catch(e) {
-        throw e;
-    }
-}
 
-var resolveSourceColumn = function(name, columndefinition) {
-    try {
-        if(Array.isArray(columndefinition)) {
-            let rst = columndefinition.find(col => {
-                if(col.target) {
-                    return col.target == name;
-                }
-                return false;
-            })
-
-            if(rst) {
-                return rst.source;
-            }
-
-            return null;
-        } else {
-            return null;
-        }
-    } catch(e) {
-        throw e;
     }
 }
 

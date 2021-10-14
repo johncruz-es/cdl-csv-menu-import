@@ -89,8 +89,8 @@ Process = function(csv, type, marketData, cdf) {
     switch(type) {
         case undefined : 
             throw new Error("No type provided");
-        case 'canteen' : // Canteen
-            console.log('Processing NBCU file');
+        case 'canteen' : // Canteen 
+            console.log('Processing Canteen file');
             template = fs.readFileSync('./columndefinitions/canteen.cdf.json');
             columndefinition = JSON.parse(template);
             rst = cmb.CreateCanteenModel(csv, columndefinition, marketData);

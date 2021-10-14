@@ -137,7 +137,12 @@ var prepareItem = function(item, columndefinition) {
                         case '' : 
                             break;
                         case "Barcode": 
-                            newItem.Barcodes.push({ BarCode : item[key] });
+                            let aBarcode = parseBarcode(item[key]);
+                            if(aBarcode.length) {
+                                aBarcode.forEach(bc => {
+                                    newItem.Barcodes.push({ BarCode : bc });
+                                })
+                            }
                             break;
                         case "ProductPackageID" :
                             newItem[target] = parseInt(item[key]);
@@ -193,4 +198,24 @@ var resolveColumn = function(name, columndefinition) {
     } catch(e) {
 
     }
+}
+
+/**
+ * Takes the string barcode and returns an array using a comma-separated list
+ * 12345, 34567 => [ "12345", "34567" ]
+ * 
+ * @param {string} barcode 
+ * @returns 
+ */
+var parseBarcode = function(barcode) {
+    if(!barcode) 
+        return [];
+    
+    // `barcode` is a value -- see if it's parseable
+    let bc = barcode.split(",");
+    for(let i = 0; i < bc.length; i++) {
+        bc[i] = bc[i].trim();
+    }
+
+    return bc;
 }

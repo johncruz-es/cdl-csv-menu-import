@@ -1,0 +1,11 @@
+[
+    { "source" : "Item Code", "target" : "ProductPackageID" }, 
+    { "source" : "Item", "target" : "ProductName" }, 
+    { "source" : "Type", "target" : "ProductCategory" }, 
+    { "source" : "Price", "target" : "Price" }, 
+    { "source" : "TaxRate", "target" : "TaxRate" }, 
+    { "source" : "FeeAmount", "target" : "FeeAmount" }, 
+    { "source" : "SubMenu", "target" : "SubMenu" }, 
+    { "source" : "HealthyIndicator", "target" : "HealthyIndicator" },
+    { "source" : "Barcode", "target" : "Barcode" }
+]
